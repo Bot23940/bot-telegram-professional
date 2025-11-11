@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Environnement et configuration sensible
+.env
+backend/.env
+*.env
+!.env.example
+
+# Base de données et données sensibles
+db/sales_db.json
+db/*.json
+
+# Fichiers de données (listes à vendre)
+fichiers/*.txt
+data/*.txt
+*.txt
+!requirements.txt
+
+# Gros fichiers DB
+DB*.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.backup
+*.bak
+*.backup_*

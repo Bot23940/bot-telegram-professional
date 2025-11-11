@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Démarrer le backend FastAPI en arrière-plan
-python -m uvicorn backend.app:app --host 0.0.0.0 --port ${PORT:-8000} --log-level warning &
+# Démarrer le bot Telegram en arrière-plan
+python -u bot/bot.py &
 
-# Attendre que le backend démarre
-sleep 5
+# Attendre un peu
+sleep 3
 
-# Démarrer le bot Telegram (au premier plan pour que Render ne tue pas le processus)
-python -u bot/bot.py
+# Démarrer le backend FastAPI au premier plan (pour que Render détecte le port)
+exec python -m uvicorn backend.app:app --host 0.0.0.0 --port ${PORT:-8000} --log-level warning

@@ -6,7 +6,8 @@ if sys.platform == 'win32':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 from fastapi import FastAPI, HTTPException, Form, Request, Header
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 import os
 import json
@@ -22,6 +23,9 @@ except Exception as e:
     print(f"⚠️  .env non chargé (ignoré): {e}")
 
 app = FastAPI()
+
+# --- Mount static files (frontend) ---
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 # --- Database file path ---
 DB_FILE = Path("db/sales_db.json")
@@ -136,6 +140,12 @@ def get_or_create_user(user_id: int) -> dict:
 
 @app.get("/")
 def home():
+    """Servir le dashboard HTML"""
+    return FileResponse("frontend/index.html")
+
+@app.get("/api/health")
+def health():
+    """Route de santé pour vérifier que l'API fonctionne"""
     return {"message": "✅ API du bot opérationnelle !"}
 
 @app.get("/user/{user_id}")
